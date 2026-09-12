@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Access</title>
+</head>
+
+<body>
+  <h1>Camera</h1>
+
+  <p>This page will use your camera only after you give permission.</p>
+
+  <button onclick="startCamera()">Allow Camera</button>
+
+  <br><br>
+
+  <video id="camera" autoplay playsinline width="320"></video>
+
+  <script>
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true
+        });
+
+        document.getElementById("camera").srcObject = stream;
+
+      } catch (error) {
+        alert("Camera permission was denied or unavailable.");
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
