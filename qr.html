@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #0b0b0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #15151c;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #22222b;
+      color: white;
+      margin: 15px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #qrcode {
+      background: white;
+      padding: 15px;
+      margin: 20px auto;
+      width: fit-content;
+    }
+
+    #download {
+      display: none;
+      color: #8ab4ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>QR Code Generator</h1>
+    <p>Enter your camera website URL.</p>
+
+    <input
+      id="url"
+      placeholder="https://yourusername.github.io/camera-page/"
+    >
+
+    <button onclick="generateQR()">Generate QR Code</button>
+
+    <div id="qrcode"></div>
+
+    <a id="download" download="camera-qr.png">
+      Download QR Code
+    </a>
+  </div>
+
+  <script>
+    function generateQR() {
+      const url = document.getElementById("url").value.trim();
+      const qr = document.getElementById("qrcode");
+      const download = document.getElementById("download");
+
+      if (!url) {
+        alert("Please enter your website URL.");
+        return;
+      }
+
+      qr.innerHTML = "";
+
+      new QRCode(qr, {
+        text: url,
+        width: 220,
+        height: 220
+      });
+
+      setTimeout(() => {
+        const img = qr.querySelector("img");
+
+        if (img) {
+          download.href = img.src;
+          download.style.display = "inline-block";
+        }
+      }, 500);
+    }
+  </script>
+
+</body>
+</html> 
